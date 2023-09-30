@@ -1,29 +1,23 @@
-//your code here
-function updateClockHands() {
-  const now = new Date();
+function updateClock() {
+  var now = new Date();
+  var hour = now.getHours();
+  var minute = now.getMinutes();
+  var second = now.getSeconds();
 
-  const hours = now.getHours() % 12; // Convert to 12-hour format
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+  var hourHand = document.getElementByClassName('hand hour-hand');
+  var minHand = document.getElementByClassName('hand min-hand');
+  var secondHand = document.getElementByClassName('hand second-hand');
 
-  // Calculate rotation angles for each hand
-  const hourRotation = (360 / 12) * (hours + minutes / 60);
-  const minuteRotation = (360 / 60) * (minutes + seconds / 60);
-  const secondRotation = (360 / 60) * seconds;
+  // Calculate the rotation angles for the clock hands
+  var hourRotation = 30 * (hour % 12) + minute / 2; // Each hour is 30 degrees, and each minute adds 0.5 degrees
+  var minuteRotation = 6 * minute + second / 10; // Each minute is 6 degrees, and each second adds 0.1 degrees
+  var secondRotation = 6 * second; // Each second is 6 degrees
 
-  // Select clock hands
-  const hourHand = document.querySelector('.hour-hand');
-  const minuteHand = document.querySelector('.min-hand');
-  const secondHand = document.querySelector('.second-hand');
-
-  // Apply rotations to clock hands
-  hourHand.style.transform = `rotate(${hourRotation}deg)`;
-  minuteHand.style.transform = `rotate(${minuteRotation}deg)`;
-  secondHand.style.transform = `rotate(${secondRotation}deg)`;
+  // Apply the rotation using CSS transform
+  hourHand.style.transform = 'rotate(' + hourRotation + 'deg)';
+  minuteHand.style.transform = 'rotate(' + minuteRotation + 'deg)';
+  secondHand.style.transform = 'rotate(' + secondRotation + 'deg)';
 }
 
-// Update clock hands every second
-setInterval(updateClockHands, 1000);
-
-// Initial call to set the correct positions
-// updateClockHands();
+// Call the updateClock function every second to keep the clock hands updated
+setInterval(updateClock, 1000);
